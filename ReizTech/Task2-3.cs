@@ -15,7 +15,9 @@ namespace ReizTech
         {
             Branch head = new Branch();
 
-            /*head.branches.AddRange(new List<Branch>{ new Branch(), new Branch() }); // Discrete way to populate tree
+            // Discrete way to populate tree:
+
+            /*head.branches.AddRange(new List<Branch>{ new Branch(), new Branch() });
 
             head.branches[0].branches.Add(new Branch());
             head.branches[1].branches.AddRange(new List<Branch> { new Branch(), new Branch(), new Branch() });
@@ -27,12 +29,16 @@ namespace ReizTech
             head.branches[1].branches[1].branches[0].branches.Add(new Branch());*/
 
             input = "2 1 0 3 1 0 2 1 0 1 0 1 0"; // input string corresponds to tree presented in Task 2
-            head = populateTree();
+            head = PopulateTree();
 
-            Console.WriteLine($"Depth of Branch is {getDepth(head)}");
+            Console.WriteLine($"Depth of Branch is {GetDepth(head)}");
         }
 
-        static Branch populateTree() // Populates tree according to string input - first character in input is branch count (limited to 9 per branch), tree is populated left to right
+        /// <summary>
+        /// Populates tree according to string input - first character in input is branch count (limited to 9 per branch), tree is populated left to right
+        /// </summary>
+        /// <returns></returns>
+        static Branch PopulateTree() 
         {
             Branch head = new Branch();
             int newBranches = input[0] - 48;
@@ -40,20 +46,25 @@ namespace ReizTech
             for (int i = 0; i < newBranches; ++i)
             {
                 input = input.Substring(2);
-                Branch nBranch = populateTree();
+                Branch nBranch = PopulateTree();
                 head.branches.Add(nBranch);
             }
 
             return head;
         }
 
-        static int getDepth(Branch head) // Recursively calculates maximum depth of Branch
+        /// <summary>
+        /// Recursively calculates maximum depth of Branch
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        static int GetDepth(Branch head) 
         {
             int maxDepth = 0;
 
             foreach(Branch b in head.branches)
             {
-                int curDepth = getDepth(b);
+                int curDepth = GetDepth(b);
                 if (curDepth > maxDepth)
                     maxDepth = curDepth;
             }
